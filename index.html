@@ -2,10 +2,10 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Índice de Cursos - Unicesumar</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pós-Graduação - Unicesumar</title>
 
 <style>
-
 /* ===== ANIMAÇÃO DE ENTRADA DO SITE ===== */
 body{
     margin:0;
@@ -42,17 +42,17 @@ body{
 
 /* ===== LOGO ===== */
 .logo{
-    width:160px;
+    width:150px;
     margin-bottom:20px;
 }
 
 /* ===== INPUT ===== */
 input{
     width:100%;
-    padding:18px;
+    padding:16px;
     font-size:20px;
     border:none;
-    border-radius:12px;
+    border-radius:10px;
     outline:none;
     text-align:center;
 }
@@ -60,167 +60,219 @@ input{
 /* ===== RESULTADO ===== */
 #resultado{
     margin-top:25px;
-    font-size:26px;
+    font-size:24px;
     color:#ffffff;
-    min-height:35px;
+    min-height:30px;
 }
 
 /* ===== CRÉDITO ===== */
-.credito{
-    position: fixed;
-    bottom: 6px;
-    right: 10px;
-    font-size: 9px;
-    opacity: 0.25;
-    color: #ffffff;
-    pointer-events: none;
+.footer{
+    margin-top:25px;
+    font-size:9px;
+    color:rgba(255,255,255,0.35);
 }
-
 </style>
 </head>
 
 <body>
-
 <div class="container">
     <img src="tata.png" class="logo">
-    <input type="text" id="busca" placeholder="Digite o código do curso...">
+    <input type="text" id="busca" placeholder="Digite o código do curso">
     <div id="resultado"></div>
+    <div class="footer">desenvolvido por Fabricio Benigno</div>
 </div>
 
-<div class="credito">Desenvolvido por Fabricio Benigno</div>
-
 <script>
-
-/* ===== BASE DE CURSOS ===== */
+/* ===== BASE DE CURSOS DE PÓS ===== */
 const cursos = {
-"EPOS_ADMPES":"Administração de Pessoas",
-"EPOS_SUPOR":"Administração escolar, supervisão e orientação",
-"EPOS_ADFIN":"Administração Financeira",
-"EPOS_ADPUB":"Administração Pública",
-"EPOS_ALFAB":"Alfabetização e Letramento",
-"EPOS_ESCFA":"Ambiente Escolar e Familiar",
-"EPOS_ARTCE":"Arte, Cultura e Educação",
-"EPOS_EDUIN":"Atendimento Educacional Especializado Educação Especial e Inclusiva",
-"EPOS_AUFIN":"Auditoria e Finanças",
-"EPOS_AUDCO":"Auditoria, Contabilidade e Perícia Contábil",
-"EPOS_BDADO":"Big Data e Análise de Dados Organizacionais",
-"EPOS_BIAMB":"Biotecnologia Ambiental",
-"EPOS_CDADO":"Ciência de Dados",
-"EPOS_CIPOL":"Ciência Política",
-"EPOS_COMCOR":"Comunicação Corporativa Estratégica e Gestão de Crise",
-"EPOS_CMKTD":"Comunicação Empresarial e Marketing Digital",
-"EPOS_COPED":"Coordenação Pedagógica",
-"EPOS_DJAVA":"Desenvolvimento de Sistemas com JAVA",
-"EPOS_DPYTH":"Desenvolvimento de Sistemas com Python",
-"EPOS_DPROF":"Desenvolvimento Profissional",
-"EPOS_DESUX":"Design de UX",
-"EPOS_DTHIN":"Design Thinking e Criatividade",
-"EPOS_DINOV":"Didática Inovadora na Educação Básica",
-"EPOS_CIVIL":"Direito Civil",
-"EPOS_DIMOB":"Direito Imobiliário",
-"EPOS_PENAL":"Direito Penal",
-"EPOS_TRAB":"Direito Trabalhista",
-"EPOS_DIRHU":"Direitos Humanos e Realidades Regionais",
-"EPOS_DOCAP":"Docência Aplicada a Questões Socioeducativas",
-"EPOS_DSS":"Docência em Serviço Social",
-"EPOS_DESUP":"Docência no Ensino Superior",
-"EPOS_EADTE":"EAD e as Novas Tecnologias Educacionais",
-"EPOS_EDAMB":"Educação Ambiental e Sustentabilidade",
-"EPOS_EJALU":"Educação de Jovens e Adultos e Ludopedagogia",
-"EPOS_ECAMP":"Educação do Campo",
-"EPOS_EITACA":"Educação Especial e Inclusiva: Tecnologia Assistiva e Comunicação Alternativa",
-"EPOS_INCLU":"Educação Especial Inclusiva",
-"EPOS_AUTIS":"Educação Especial: Transtorno do Espectro Autista",
-"EPOS_EDFIN":"Educação Financeira e o Ensino da Matemática",
-"EPOS_EDUFI":"Educação Física Escolar",
-"EPOS_EDINF":"Educação Infantil e Anos Iniciais do Ensino Fundamental",
-"EPOS_EDSOC":"Educação Social e Cidadania",
-"EPOS_EMPNI":"Empreendimentos e Negócios Imobiliários",
-"EPOS_ENFTR":"Enfermagem do Trabalho",
-"EPOS_SEGTR":"Engenharia de Segurança do Trabalho",
-"EPOS_EPROD":"Engenharia e Gestão da Produção",
-"EPOS_HIGEO":"Ensino de História e Geografia e suas Linguagens",
-"EPOS_ESTET":"Estética e Cosmética: Mercado e Procedimentos",
-"EPOS_BIBIA":"Estudos Bíblicos no Antigo Testamento",
-"EPOS_BIBIN":"Estudos Bíblicos no Novo Testamento",
-"EPOS_FASHL":"Fashion Law Direito da Moda",
-"EPOS_FISIO":"Fisiologia do Exercício",
-"EPOS_GAME":"Gamificação na Educação",
-"EPOS_GAFUN":"Gastronomia Funcional e Natural",
-"EPOS_GEAMB":"Gestão Ambiental",
-"EPOS_GEAPR":"Gestão da Aprendizagem e Educação Cognitiva",
-"EPOS_GQUAL":"Gestão da Qualidade",
-"EPOS_GQSAU":"Gestão da Qualidade em Saúde",
-"EPOS_GCOOP":"Gestão de Cooperativas de Crédito",
-"EPOS_GECUS":"Gestão de Custos e Planejamento Estratégico",
-"EPOS_GPESP":"Gestão de Pessoas na Administração Pública",
-"EPOS_GPTD":"Gestão de Pessoas: Treinamento e Desenvolvimento",
-"EPOS_GPROJ":"Gestão de Projetos",
-"EPOS_GTICO":"Gestão de Tecnologia da Informação Corporativa",
-"EPOS_GCOMP":"Gestão do Comportamento e da Interatividade em Organizações",
-"EPOS_GCONH":"Gestão do Conhecimento na Educação",
-"EPOS_GSUSS":"Gestão do Sistema Único da Assistência Social",
-"EPOS_GPLAN":"Gestão e Planejamento",
-"EPOS_GEEDU":"Gestão Educacional",
-"EPOS_GESC":"Gestão Escolar",
-"EPOS_ESPO":"Gestão Estratégica de Esportes",
-"EPOS_GENEG":"Gestão Estratégica de Negócios",
-"EPOS_GESAU":"Gestão Estratégica de Organizações da Saúde",
-"EPOS_GEPES":"Gestão Estratégica de Pessoas",
-"EPOS_GESTV":"Gestão Estratégica do Varejo",
-"EPOS_GNEGG":"Gestão Estratégica em Negócios Gastronômicos",
-"EPOS_HOSP":"Gestão Hospitalar",
-"EPOS_GTRANS":"Gestão, Educação e Segurança no Trânsito",
-"EPOS_GOVGE":"Governança Corporativa e Gestão Estratégica",
-"EPOS_GOVRS":"Governança Corporativa e Responsabilidade Social",
-"EPOS_HIGIO":"Higiene Ocupacional",
-"EPOS_HAFRO":"História, Cultura e Literatura Afro-Brasileira e Indígena",
-"EPOS_INEMS":"Inovação e Empreendedorismo Social",
-"EPOS_INECO":"Inovação e Gestão de Conteúdo para a Economia Criativa",
-"EPOS_NEDIS":"Inovação e Negócios Disruptivos",
-"EPOS_INMAT":"Inovações no Ensino de Matemática",
-"EPOS_IAMAL":"Inteligência Artificial e Machine Learning",
-"EPOS_LEITP":"Leitura e Produção Textual",
-"EPOS_LIDEQ":"Liderança e Gestão de Equipes",
-"EPOS_LIDIN":"Liderança Inovadora",
-"EPOS_LPLIT":"Língua Portuguesa e Literatura no Contexto Educacional",
-"EPOS_LOGIS":"Logística",
-"EPOS_LUDIC":"Ludicidade no Currículo Escolar",
-"EPOS_MARKT":"Marketing",
-"EPOS_MKTDI":"Marketing Digital",
-"EPOS_MKTMD":"Marketing e Mídias Digitais",
-"EPOS_MASUS":"Meio Ambiente e Sustentabilidade",
-"EPOS_FBANK":"Mercado Financeiro e Banking",
-"EPOS_MPEAD":"Metodologias e Processos em EAD",
-"EPOS_MODAN":"Moda e Negócio",
-"EPOS_AGEIS":"Negócios Ágeis",
-"EPOS_DIGIN":"Negócios Digitais e Inovação",
-"EPOS_NEURO":"Neuroaprendizagem",
-"EPOS_NAEAP":"Neurociências Aplicada à Educação e Aprendizagem",
-"EPOS_NEUEDU":"Neuroeducação",
-"EPOS_NEUMKT":"Neuromarketing",
-"EPOS_PGNEURO":"Neuropsicologia",
-"EPOS_NEUROP":"Neuropsicopedagogia",
-"EPOS_NUTES":"Nutrição e Alta Performance Esportiva",
-"EPOS_NUTFU":"Nutrição Funcional",
-"EPOS_OREDU":"Orientação Educacional",
-"EPOS_HOMED":"Pedagogia e Novo Cenário da Home Education",
-"EPOS_PEDEM":"Pedagogia Empresarial e Desenvolvimento do Conhecimento",
-"EPOS_PERIC":"Perícia e Auditoria Ambiental",
-"EPOS_PERSO":"Personal Training",
-"EPOS_GTRAN":"Planejamento e Gestão de Trânsito",
-"EPOS_PEVEN":"Planejamento e Organização de Eventos",
-"EPOS_POLED":"Políticas e Educação Democrática",
-"EPOS_PMUNI":"Políticas Públicas e Municipalidade",
-"EPOS_METAG":"Prática de Metodologias Ágeis",
-"EPOS_INOVE":"Práticas Inovadoras em Educação",
-"EPOS_PINTE":"Projeto de Interiores",
-"EPOS_PSIEDU":"Psicologia Educacional",
-"EPOS_PSIORG":"Psicologia Organizacional",
-"EPOS_PSIPO":"Psicologia Positiva e Coaching",
-"EPOS_PSICO":"Psicopedagogia",
-"EPOS_PSPED":"Psicopedagogia Clínica e Institucional",
-"EPOS_SAUPU":"Saúde Pública"
+"EPOS_ACUP_COMP":"Acupuntura e Técnicas Complementares",
+"EPOS_ANL_CLIN":"Análises Clínicas",
+"EPOS_AUD_GOV":"Auditoria e Governança Clínica em Saúde",
+"EPOS_AUD_SAU":"Auditoria em Saúde",
+"EPOS_NARR_COPY":"Construção de Narrativas e Copywriting",
+"EPOS_CUID_PALI":"Cuidados Paliativos e Tanatologia",
+"EPOS_DIR_MED":"Direito Médico e Compliance",
+"EPOS_ENF_CARD":"Enfermagem em Cardiologia e Hemodinâmica",
+"EPOS_ENF_UTI_NEO":"Enfermagem em Cuidados Intensivos Neonatais e Pediátricos",
+"EPOS_ENF_ESTO":"Enfermagem em Estomaterapia",
+"EPOS_ENF_NEFR":"Enfermagem em Nefrologia",
+"EPOS_ENFER_PED_NEO":"Enfermagem em Pediatria e Neonatal",
+"EPOS_ENF_UTI":"Enfermagem em Unidade de Terapia Intensiva",
+"EPOS_ENFERM_URG":"Enfermagem em Urgência e Emergência",
+"EPOS_ETIC_SAU":"Ética e Regulação na Saúde Digital",
+"EPOS_FARM_HOSP":"Farmácia Hospitalar e Clínica",
+"EPOS_FARM_CLI":"Farmacologia Aplicada à Clínica e Prescrição Farmacêutica",
+"EPOS_FIS_CARD":"Fisioterapia Cardiorrespiratória",
+"EPOS_FIS_GERON":"Fisioterapia em Gerontologia e Reabilitação do Idoso",
+"EPOS_FIS_REAB":"Fisioterapia em Reabilitação Neurológica",
+"EPOS_FIS_UTI":"Fisioterapia em Terapia Intensiva",
+"EPOS_FISIOP":"Fisioterapia Pélvica Funcional",
+"EPOS_FIS_TRAUMA_ORT":"Fisioterapia Traumato-Ortopédica Funcional",
+"EPOS_FONO_AUD":"Fonoaudiologia com Ênfase em Audiologia e Reabilitação Auditiva",
+"EPOS_FONO_HOSP":"Fonoaudiologia Hospitalar e Reabilitação",
+"EPOS_GEST_SEG":"Gestão da Qualidade e Segurança do Paciente",
+"EPOS_HEMATO_CLIN":"Hematologia Clínica",
+"EPOS_HIG_ALI":"Higiene e Inspeção de Alimentos",
+"EPOS_INC_ACES":"Inclusão e Acessibilidade na Era Digital",
+"EPOS_IA_GROW":"Inteligência Artificial Aplicada a Growth Marketing",
+"EPOS_INT_ARTIFIC":"Inteligência Artificial Aplicada à Saúde",
+"EPOS_IA_EDU":"Inteligência Artificial na Educação",
+"EPOS_MAGRO":"MBA em Agronegócio",
+"EPOS_MCOAC":"MBA em Coaching Aplicado à Gestão de Pessoas",
+"EPOS_MCOME":"MBA em Coaching com Ênfase em Mentoring para Gestão de Pessoas",
+"EPOS_ECORPGC":"MBA em Educação Corporativa e Gestão do Conhecimento",
+"EPOS_MEDEX":"MBA em Educação Executiva e Análise Organizacional",
+"EPOS_MGCOM":"MBA em Gestão Comercial e Inteligência de Mercado",
+"EPOS_MCOMO":"MBA em Gestão da Comunicação Organizacional",
+"EPOS_MGNEG":"MBA em Gestão de Negócios e Inovação",
+"EPOS_MBAPRO":"MBA em Gestão de Projetos",
+"EPOS_MPROS":"MBA em Gestão de Projetos e Negócios Sociais",
+"EPOS_MGECO":"MBA em Gestão do Conhecimento nas Organizações",
+"EPOS_MINCR":"MBA em Inovação e Criatividade no Ambiente Empresarial",
+"EPOS_MMKTI":"MBA em Marketing, Criatividade e Inovação",
+"EPOS_MPENF":"MBA em Pedagogia não Formal: Novos Espaços para a Atuação do Pedagogo",
+"EPOS_MPESO":"MBA em Planejamento e Estratégia Organizacional",
+"EPOS_MBARH":"MBA em Recursos Humanos",
+"EPOS_MSUPL":"MBA em Supply Chain Management: Gerenciamento da Cadeia de Suprimentos",
+"EPOS_MECCR":"MBA Executivo em Economia Criativa, Cultura e Inovação",
+"EPOS_NEURO_SAU":"Neurociências Aplicadas à Saúde e Bem-Estar",
+"EPOS_NEURO_IA":"Neuroeducação, Inteligência Artificial e Inovação Digital na Aprendizagem",
+"EPOS_NUTRI_CLI":"Nutrição Clínica",
+"EPOS_NUT_EST":"Nutrição Estética Funcional e Marketing Estratégico",
+"EPOS_NUTRI_MAT":"Nutrição Materno Infantil",
+"EPOS_PODO_CLIN":"Podologia Clínica",
+"EPOS_ADMPES":"Pós-graduação em Administração de Pessoas",
+"EPOS_SUPOR":"Pós-graduação em Administração Escolar, Supervisão e Orientação",
+"EPOS_ADFIN":"Pós-graduação em Administração Financeira",
+"EPOS_ADPUB":"Pós-graduação em Administração Pública",
+"EPOS_ALFAB":"Pós-graduação em Alfabetização e Letramento",
+"EPOS_ESCFA":"Pós-graduação em Ambiente Escolar e Familiar",
+"EPOS_ARTCE":"Pós-graduação em Arte, Cultura e Educação",
+"EPOS_EDUIN":"Pós-graduação em Atendimento Educacional Especializado Educação Especial e Inclusiva",
+"EPOS_AUFIN":"Pós-graduação em Auditoria e Finanças",
+"EPOS_AUDCO":"Pós-graduação em Auditoria, Contabilidade e Perícia Contábil",
+"EPOS_BDADO":"Pós-graduação em Big Data e Análise de Dados Organizacionais",
+"EPOS_BIAMB":"Pós-graduação em Biotecnologia Ambiental",
+"EPOS_CDADO":"Pós-graduação em Ciência de Dados",
+"EPOS_CIPOL":"Pós-graduação em Ciência Política",
+"EPOS_COMCOR":"Pós-graduação em Comunicação Corporativa Estratégica e Gestão de Crise",
+"EPOS_CMKTD":"Pós-graduação em Comunicação Empresarial e Marketing Digital",
+"EPOS_COPED":"Pós-graduação em Coordenação Pedagógica",
+"EPOS_DJAVA":"Pós-graduação em Desenvolvimento de Sistemas com JAVA",
+"EPOS_DPYTH":"Pós-graduação em Desenvolvimento de Sistemas com Python",
+"EPOS_DPROF":"Pós-graduação em Desenvolvimento Profissional",
+"EPOS_DESUX":"Pós-graduação em Design de UX",
+"EPOS_DTHIN":"Pós-graduação em Design Thinking e Criatividade",
+"EPOS_DINOV":"Pós-graduação em Didática Inovadora na Educação Básica",
+"EPOS_CIVIL":"Pós-graduação em Direito Civil",
+"EPOS_DIMOB":"Pós-graduação em Direito Imobiliário",
+"EPOS_PENAL":"Pós-graduação em Direito Penal",
+"EPOS_TRAB":"Pós-graduação em Direito Trabalhista",
+"EPOS_DIRHU":"Pós-graduação em Direitos Humanos e Realidades Regionais",
+"EPOS_DOCAP":"Pós-graduação em Docência Aplicada a Questões Socioeducativas",
+"EPOS_DSS":"Pós-graduação em Docência em Serviço Social",
+"EPOS_DESUP":"Pós-graduação em Docência no Ensino Superior",
+"EPOS_EADTE":"Pós-graduação em EAD e as Novas Tecnologias Educacionais",
+"EPOS_EDAMB":"Pós-graduação em Educação Ambiental e Sustentabilidade",
+"EPOS_EJALU":"Pós-graduação em Educação de Jovens e Adultos e Ludopedagogia",
+"EPOS_ECAMP":"Pós-graduação em Educação do Campo",
+"EPOS_EITACA":"Pós-graduação em Educação Especial e Inclusiva: Tecnologia Assistiva e Comunicação Alternativa",
+"EPOS_INCLU":"Pós-graduação em Educação Especial Inclusiva",
+"EPOS_AUTIS":"Pós-graduação em Educação Especial: Transtorno do Espectro Autista",
+"EPOS_EDFIN":"Pós-graduação em Educação Financeira e o Ensino da Matemática",
+"EPOS_EDUFI":"Pós-graduação em Educação Física Escolar",
+"EPOS_EDINF":"Pós-graduação em Educação Infantil e Anos Iniciais do Ensino Fundamental",
+"EPOS_EDSOC":"Pós-graduação em Educação Social e Cidadania",
+"EPOS_EMPNI":"Pós-graduação em Empreendimentos e Negócios Imobiliários",
+"EPOS_ENFTR":"Pós-graduação em Enfermagem do Trabalho",
+"EPOS_SEGTR":"Pós-graduação em Engenharia de Segurança do Trabalho",
+"EPOS_EPROD":"Pós-graduação em Engenharia e Gestão da Produção",
+"EPOS_HIGEO":"Pós-graduação em Ensino de História e Geografia e suas Linguagens",
+"EPOS_ESTET":"Pós-graduação em Estética e Cosmética: Mercado e Procedimentos",
+"EPOS_BIBIA":"Pós-graduação em Estudos Bíblicos no Antigo Testamento",
+"EPOS_BIBIN":"Pós-graduação em Estudos Bíblicos no Novo Testamento",
+"EPOS_FASHL":"Pós-graduação em Fashion Law Direito da Moda",
+"EPOS_FISIO":"Pós-graduação em Fisiologia do Exercício",
+"EPOS_GAME":"Pós-graduação em Gamificação na Educação",
+"EPOS_GAFUN":"Pós-graduação em Gastronomia Funcional e Natural",
+"EPOS_GEAMB":"Pós-graduação em Gestão Ambiental",
+"EPOS_GEAPR":"Pós-graduação em Gestão da Aprendizagem e Educação Cognitiva",
+"EPOS_GQUAL":"Pós-graduação em Gestão da Qualidade",
+"EPOS_GQSAU":"Pós-graduação em Gestão da Qualidade em Saúde",
+"EPOS_GCOOP":"Pós-graduação em Gestão de Cooperativas de Crédito",
+"EPOS_GECUS":"Pós-graduação em Gestão de Custos e Planejamento Estratégico",
+"EPOS_GPESP":"Pós-graduação em Gestão de Pessoas na Administração Pública",
+"EPOS_GPTD":"Pós-graduação em Gestão de Pessoas: Treinamento e Desenvolvimento",
+"EPOS_GPROJ":"Pós-graduação em Gestão de Projetos",
+"EPOS_GTICO":"Pós-graduação em Gestão de Tecnologia da Informação Corporativa",
+"EPOS_GCOMP":"Pós-graduação em Gestão do Comportamento e da Interatividade em Organizações",
+"EPOS_GCONH":"Pós-graduação em Gestão do Conhecimento na Educação",
+"EPOS_GSUSS":"Pós-graduação em Gestão do Sistema Único da Assistência Social",
+"EPOS_GPLAN":"Pós-graduação em Gestão e Planejamento",
+"EPOS_GEEDU":"Pós-graduação em Gestão Educacional",
+"EPOS_GESC":"Pós-graduação em Gestão Escolar",
+"EPOS_ESPO":"Pós-graduação em Gestão Estratégica de Esportes",
+"EPOS_GENEG":"Pós-graduação em Gestão Estratégica de Negócios",
+"EPOS_GESAU":"Pós-graduação em Gestão Estratégica de Organizações da Saúde",
+"EPOS_GEPES":"Pós-graduação em Gestão Estratégica de Pessoas",
+"EPOS_GESTV":"Pós-graduação em Gestão Estratégica do Varejo",
+"EPOS_GNEGG":"Pós-graduação em Gestão Estratégica em Negócios Gastronômicos",
+"EPOS_HOSP":"Pós-graduação em Gestão Hospitalar",
+"EPOS_GTRANS":"Pós-graduação em Gestão, Educação e Segurança no Trânsito",
+"EPOS_GOVGE":"Pós-graduação em Governança Corporativa e Gestão Estratégica",
+"EPOS_GOVRS":"Pós-graduação em Governança Corporativa e Responsabilidade Social",
+"EPOS_HIGIO":"Pós-graduação em Higiene Ocupacional",
+"EPOS_HAFRO":"Pós-graduação em História, Cultura e Literatura Afro-Brasileira e Indígena",
+"EPOS_INEMS":"Pós-graduação em Inovação e Empreendedorismo Social",
+"EPOS_INECO":"Pós-graduação em Inovação e Gestão de Conteúdo para a Economia Criativa",
+"EPOS_NEDIS":"Pós-graduação em Inovação e Negócios Disruptivos",
+"EPOS_INMAT":"Pós-graduação em Inovações no Ensino de Matemática",
+"EPOS_IAMAL":"Pós-graduação em Inteligência Artificial e Machine Learning",
+"EPOS_LEITP":"Pós-graduação em Leitura e Produção Textual",
+"EPOS_LIDEQ":"Pós-graduação em Liderança e Gestão de Equipes",
+"EPOS_LIDIN":"Pós-graduação em Liderança Inovadora",
+"EPOS_LPLIT":"Pós-graduação em Língua Portuguesa e Literatura no Contexto Educacional",
+"EPOS_LOGIS":"Pós-graduação em Logística",
+"EPOS_LUDIC":"Pós-graduação em Ludicidade no Currículo Escolar",
+"EPOS_MARKT":"Pós-graduação em Marketing",
+"EPOS_MKTDI":"Pós-graduação em Marketing Digital",
+"EPOS_MKTMD":"Pós-graduação em Marketing e Mídias Digitais",
+"EPOS_MASUS":"Pós-graduação em Meio Ambiente e Sustentabilidade",
+"EPOS_FBANK":"Pós-graduação em Mercado Financeiro e Banking",
+"EPOS_MPEAD":"Pós-graduação em Metodologias e Processos em EAD",
+"EPOS_MODAN":"Pós-graduação em Moda e Negócio",
+"EPOS_AGEIS":"Pós-graduação em Negócios Ágeis",
+"EPOS_DIGIN":"Pós-graduação em Negócios Digitais e Inovação",
+"EPOS_NEURO":"Pós-graduação em Neuroaprendizagem",
+"EPOS_NAEAP":"Pós-graduação em Neurociências Aplicada à Educação e Aprendizagem",
+"EPOS_NEUEDU":"Pós-graduação em Neuroeducação",
+"EPOS_NEUMKT":"Pós-graduação em Neuromarketing",
+"EPOS_PGNEURO":"Pós-graduação em Neuropsicologia",
+"EPOS_NEUROP":"Pós-graduação em Neuropsicopedagogia",
+"EPOS_NUTES":"Pós-graduação em Nutrição e Alta Performance Esportiva",
+"EPOS_NUTFU":"Pós-graduação em Nutrição Funcional",
+"EPOS_OREDU":"Pós-graduação em Orientação Educacional",
+"EPOS_HOMED":"Pós-graduação em Pedagogia e Novo Cenário da Home Education",
+"EPOS_PEDEM":"Pós-graduação em Pedagogia Empresarial e Desenvolvimento do Conhecimento",
+"EPOS_PERIC":"Pós-graduação em Perícia e Auditoria Ambiental",
+"EPOS_PERSO":"Pós-graduação em Personal Training",
+"EPOS_GTRAN":"Pós-graduação em Planejamento e Gestão de Trânsito",
+"EPOS_PEVEN":"Pós-graduação em Planejamento e Organização de Eventos",
+"EPOS_POLED":"Pós-graduação em Políticas e Educação Democrática",
+"EPOS_PMUNI":"Pós-graduação em Políticas Públicas e Municipalidade",
+"EPOS_METAG":"Pós-graduação em Prática de Metodologias Ágeis",
+"EPOS_INOVE":"Pós-graduação em Práticas Inovadoras em Educação",
+"EPOS_PINTE":"Pós-graduação em Projeto de Interiores",
+"EPOS_PSIEDU":"Pós-graduação em Psicologia Educacional",
+"EPOS_PSIORG":"Pós-graduação em Psicologia Organizacional",
+"EPOS_PSIPO":"Pós-graduação em Psicologia Positiva e Coaching",
+"EPOS_PSICO":"Pós-graduação em Psicopedagogia",
+"EPOS_PSPED":"Pós-graduação em Psicopedagogia Clínica e Institucional",
+"EPOS_SAUPU":"Pós-graduação em Saúde Pública",
+"EPOS_MERCA":"Pós-graduação em Sistema Financeiro e Mercado de Capitais",
+"EPOS_SEC":"Pós-graduação em Sociologia da Educação e Cultura",
+"EPOS_TEATR":"Pós-graduação em Teatro, Expressividade e Dinamismo no Ambiente Escolar",
+"EPOS_TCDAE":"Pós-graduação em Tecnologia e Cultura Digital Aplicadas à Educação"
 
 };
 
@@ -229,7 +281,7 @@ const input = document.getElementById("busca");
 const resultado = document.getElementById("resultado");
 
 input.addEventListener("input", function(){
-    let valor = this.value.toUpperCase().trim();
+    const valor = this.value.toUpperCase().trim();
 
     if(valor === ""){
         resultado.textContent = "";
@@ -237,8 +289,7 @@ input.addEventListener("input", function(){
     }
 
     for(let codigo in cursos){
-        let parteFinal = codigo.split("_")[1];
-
+        let parteFinal = codigo.split("_")[1]; // segunda parte do código
         if(parteFinal === valor){
             resultado.textContent = cursos[codigo];
             return;
@@ -247,7 +298,6 @@ input.addEventListener("input", function(){
 
     resultado.textContent = "";
 });
-
 </script>
 
 </body>
