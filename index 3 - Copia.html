@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Índice de Cursos - Unicesumar</title>
+
+<style>
+
+/* ===== ANIMAÇÃO DE ENTRADA DO SITE ===== */
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background: linear-gradient(135deg,#0b2d5c,#0f4aa1);
+    font-family: Arial, Helvetica, sans-serif;
+    animation: entradaSite 0.8s ease;
+}
+
+@keyframes entradaSite{
+    from{
+        opacity:0;
+        transform: scale(0.95);
+    }
+    to{
+        opacity:1;
+        transform: scale(1);
+    }
+}
+
+/* ===== CONTAINER ===== */
+.container{
+    text-align:center;
+    background: rgba(255,255,255,0.08);
+    padding:40px;
+    border-radius:20px;
+    box-shadow:0 0 25px rgba(0,0,0,0.4);
+    width:90%;
+    max-width:500px;
+}
+
+/* ===== LOGO ===== */
+.logo{
+    width:160px;
+    margin-bottom:20px;
+}
+
+/* ===== INPUT ===== */
+input{
+    width:100%;
+    padding:18px;
+    font-size:20px;
+    border:none;
+    border-radius:12px;
+    outline:none;
+    text-align:center;
+}
+
+/* ===== RESULTADO ===== */
+#resultado{
+    margin-top:25px;
+    font-size:26px;
+    color:#ffffff;
+    min-height:35px;
+}
+
+/* ===== CRÉDITO ===== */
+.credito{
+    position: fixed;
+    bottom: 6px;
+    right: 10px;
+    font-size: 9px;
+    opacity: 0.25;
+    color: #ffffff;
+    pointer-events: none;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <img src="tata.png" class="logo">
+    <input type="text" id="busca" placeholder="Digite o código do curso...">
+    <div id="resultado"></div>
+</div>
+
+<div class="credito">Desenvolvido por Fabricio Benigno</div>
+
+<script>
+
+/* ===== BASE DE CURSOS ===== */
+const cursos = {
+"EPOS_ADMPES":"Administração de Pessoas",
+"EPOS_SUPOR":"Administração escolar, supervisão e orientação",
+"EPOS_ADFIN":"Administração Financeira",
+"EPOS_ADPUB":"Administração Pública",
+"EPOS_ALFAB":"Alfabetização e Letramento",
+"EPOS_ESCFA":"Ambiente Escolar e Familiar",
+"EPOS_ARTCE":"Arte, Cultura e Educação",
+"EPOS_EDUIN":"Atendimento Educacional Especializado Educação Especial e Inclusiva",
+"EPOS_AUFIN":"Auditoria e Finanças",
+"EPOS_AUDCO":"Auditoria, Contabilidade e Perícia Contábil",
+"EPOS_BDADO":"Big Data e Análise de Dados Organizacionais",
+"EPOS_BIAMB":"Biotecnologia Ambiental",
+"EPOS_CDADO":"Ciência de Dados",
+"EPOS_CIPOL":"Ciência Política",
+"EPOS_COMCOR":"Comunicação Corporativa Estratégica e Gestão de Crise",
+"EPOS_CMKTD":"Comunicação Empresarial e Marketing Digital",
+"EPOS_COPED":"Coordenação Pedagógica",
+"EPOS_DJAVA":"Desenvolvimento de Sistemas com JAVA",
+"EPOS_DPYTH":"Desenvolvimento de Sistemas com Python",
+"EPOS_DPROF":"Desenvolvimento Profissional",
+"EPOS_DESUX":"Design de UX",
+"EPOS_DTHIN":"Design Thinking e Criatividade",
+"EPOS_DINOV":"Didática Inovadora na Educação Básica",
+"EPOS_CIVIL":"Direito Civil",
+"EPOS_DIMOB":"Direito Imobiliário",
+"EPOS_PENAL":"Direito Penal",
+"EPOS_TRAB":"Direito Trabalhista",
+"EPOS_DIRHU":"Direitos Humanos e Realidades Regionais",
+"EPOS_DOCAP":"Docência Aplicada a Questões Socioeducativas",
+"EPOS_DSS":"Docência em Serviço Social",
+"EPOS_DESUP":"Docência no Ensino Superior",
+"EPOS_EADTE":"EAD e as Novas Tecnologias Educacionais",
+"EPOS_EDAMB":"Educação Ambiental e Sustentabilidade",
+"EPOS_EJALU":"Educação de Jovens e Adultos e Ludopedagogia",
+"EPOS_ECAMP":"Educação do Campo",
+"EPOS_EITACA":"Educação Especial e Inclusiva: Tecnologia Assistiva e Comunicação Alternativa",
+"EPOS_INCLU":"Educação Especial Inclusiva",
+"EPOS_AUTIS":"Educação Especial: Transtorno do Espectro Autista",
+"EPOS_EDFIN":"Educação Financeira e o Ensino da Matemática",
+"EPOS_EDUFI":"Educação Física Escolar",
+"EPOS_EDINF":"Educação Infantil e Anos Iniciais do Ensino Fundamental",
+"EPOS_EDSOC":"Educação Social e Cidadania",
+"EPOS_EMPNI":"Empreendimentos e Negócios Imobiliários",
+"EPOS_ENFTR":"Enfermagem do Trabalho",
+"EPOS_SEGTR":"Engenharia de Segurança do Trabalho",
+"EPOS_EPROD":"Engenharia e Gestão da Produção",
+"EPOS_HIGEO":"Ensino de História e Geografia e suas Linguagens",
+"EPOS_ESTET":"Estética e Cosmética: Mercado e Procedimentos",
+"EPOS_BIBIA":"Estudos Bíblicos no Antigo Testamento",
+"EPOS_BIBIN":"Estudos Bíblicos no Novo Testamento",
+"EPOS_FASHL":"Fashion Law Direito da Moda",
+"EPOS_FISIO":"Fisiologia do Exercício",
+"EPOS_GAME":"Gamificação na Educação",
+"EPOS_GAFUN":"Gastronomia Funcional e Natural",
+"EPOS_GEAMB":"Gestão Ambiental",
+"EPOS_GEAPR":"Gestão da Aprendizagem e Educação Cognitiva",
+"EPOS_GQUAL":"Gestão da Qualidade",
+"EPOS_GQSAU":"Gestão da Qualidade em Saúde",
+"EPOS_GCOOP":"Gestão de Cooperativas de Crédito",
+"EPOS_GECUS":"Gestão de Custos e Planejamento Estratégico",
+"EPOS_GPESP":"Gestão de Pessoas na Administração Pública",
+"EPOS_GPTD":"Gestão de Pessoas: Treinamento e Desenvolvimento",
+"EPOS_GPROJ":"Gestão de Projetos",
+"EPOS_GTICO":"Gestão de Tecnologia da Informação Corporativa",
+"EPOS_GCOMP":"Gestão do Comportamento e da Interatividade em Organizações",
+"EPOS_GCONH":"Gestão do Conhecimento na Educação",
+"EPOS_GSUSS":"Gestão do Sistema Único da Assistência Social",
+"EPOS_GPLAN":"Gestão e Planejamento",
+"EPOS_GEEDU":"Gestão Educacional",
+"EPOS_GESC":"Gestão Escolar",
+"EPOS_ESPO":"Gestão Estratégica de Esportes",
+"EPOS_GENEG":"Gestão Estratégica de Negócios",
+"EPOS_GESAU":"Gestão Estratégica de Organizações da Saúde",
+"EPOS_GEPES":"Gestão Estratégica de Pessoas",
+"EPOS_GESTV":"Gestão Estratégica do Varejo",
+"EPOS_GNEGG":"Gestão Estratégica em Negócios Gastronômicos",
+"EPOS_HOSP":"Gestão Hospitalar",
+"EPOS_GTRANS":"Gestão, Educação e Segurança no Trânsito",
+"EPOS_GOVGE":"Governança Corporativa e Gestão Estratégica",
+"EPOS_GOVRS":"Governança Corporativa e Responsabilidade Social",
+"EPOS_HIGIO":"Higiene Ocupacional",
+"EPOS_HAFRO":"História, Cultura e Literatura Afro-Brasileira e Indígena",
+"EPOS_INEMS":"Inovação e Empreendedorismo Social",
+"EPOS_INECO":"Inovação e Gestão de Conteúdo para a Economia Criativa",
+"EPOS_NEDIS":"Inovação e Negócios Disruptivos",
+"EPOS_INMAT":"Inovações no Ensino de Matemática",
+"EPOS_IAMAL":"Inteligência Artificial e Machine Learning",
+"EPOS_LEITP":"Leitura e Produção Textual",
+"EPOS_LIDEQ":"Liderança e Gestão de Equipes",
+"EPOS_LIDIN":"Liderança Inovadora",
+"EPOS_LPLIT":"Língua Portuguesa e Literatura no Contexto Educacional",
+"EPOS_LOGIS":"Logística",
+"EPOS_LUDIC":"Ludicidade no Currículo Escolar",
+"EPOS_MARKT":"Marketing",
+"EPOS_MKTDI":"Marketing Digital",
+"EPOS_MKTMD":"Marketing e Mídias Digitais",
+"EPOS_MASUS":"Meio Ambiente e Sustentabilidade",
+"EPOS_FBANK":"Mercado Financeiro e Banking",
+"EPOS_MPEAD":"Metodologias e Processos em EAD",
+"EPOS_MODAN":"Moda e Negócio",
+"EPOS_AGEIS":"Negócios Ágeis",
+"EPOS_DIGIN":"Negócios Digitais e Inovação",
+"EPOS_NEURO":"Neuroaprendizagem",
+"EPOS_NAEAP":"Neurociências Aplicada à Educação e Aprendizagem",
+"EPOS_NEUEDU":"Neuroeducação",
+"EPOS_NEUMKT":"Neuromarketing",
+"EPOS_PGNEURO":"Neuropsicologia",
+"EPOS_NEUROP":"Neuropsicopedagogia",
+"EPOS_NUTES":"Nutrição e Alta Performance Esportiva",
+"EPOS_NUTFU":"Nutrição Funcional",
+"EPOS_OREDU":"Orientação Educacional",
+"EPOS_HOMED":"Pedagogia e Novo Cenário da Home Education",
+"EPOS_PEDEM":"Pedagogia Empresarial e Desenvolvimento do Conhecimento",
+"EPOS_PERIC":"Perícia e Auditoria Ambiental",
+"EPOS_PERSO":"Personal Training",
+"EPOS_GTRAN":"Planejamento e Gestão de Trânsito",
+"EPOS_PEVEN":"Planejamento e Organização de Eventos",
+"EPOS_POLED":"Políticas e Educação Democrática",
+"EPOS_PMUNI":"Políticas Públicas e Municipalidade",
+"EPOS_METAG":"Prática de Metodologias Ágeis",
+"EPOS_INOVE":"Práticas Inovadoras em Educação",
+"EPOS_PINTE":"Projeto de Interiores",
+"EPOS_PSIEDU":"Psicologia Educacional",
+"EPOS_PSIORG":"Psicologia Organizacional",
+"EPOS_PSIPO":"Psicologia Positiva e Coaching",
+"EPOS_PSICO":"Psicopedagogia",
+"EPOS_PSPED":"Psicopedagogia Clínica e Institucional",
+"EPOS_SAUPU":"Saúde Pública"
+
+};
+
+/* ===== BUSCA ===== */
+const input = document.getElementById("busca");
+const resultado = document.getElementById("resultado");
+
+input.addEventListener("input", function(){
+    let valor = this.value.toUpperCase().trim();
+
+    if(valor === ""){
+        resultado.textContent = "";
+        return;
+    }
+
+    for(let codigo in cursos){
+        let parteFinal = codigo.split("_")[1];
+
+        if(parteFinal === valor){
+            resultado.textContent = cursos[codigo];
+            return;
+        }
+    }
+
+    resultado.textContent = "";
+});
+
+</script>
+
+</body>
+</html>
