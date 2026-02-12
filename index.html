@@ -6,7 +6,6 @@
 <title>Pós-Graduação - Unicesumar</title>
 
 <style>
-/* ===== ANIMAÇÃO DE ENTRADA DO SITE ===== */
 body{
     margin:0;
     height:100vh;
@@ -19,17 +18,10 @@ body{
 }
 
 @keyframes entradaSite{
-    from{
-        opacity:0;
-        transform: scale(0.95);
-    }
-    to{
-        opacity:1;
-        transform: scale(1);
-    }
+    from{opacity:0; transform: scale(0.95);}
+    to{opacity:1; transform: scale(1);}
 }
 
-/* ===== CONTAINER ===== */
 .container{
     text-align:center;
     background: rgba(255,255,255,0.08);
@@ -40,13 +32,11 @@ body{
     max-width:500px;
 }
 
-/* ===== LOGO ===== */
 .logo{
     width:150px;
     margin-bottom:20px;
 }
 
-/* ===== INPUT ===== */
 input{
     width:100%;
     padding:16px;
@@ -57,7 +47,6 @@ input{
     text-align:center;
 }
 
-/* ===== RESULTADO ===== */
 #resultado{
     margin-top:25px;
     font-size:24px;
@@ -65,7 +54,6 @@ input{
     min-height:30px;
 }
 
-/* ===== CRÉDITO ===== */
 .footer{
     position: fixed;
     bottom: 10px;
@@ -88,17 +76,9 @@ input{
 <div class="footer">desenvolvido por Fabricio Benigno</div>
 
 <script>
-/* ===== BASE DE CURSOS ===== */
-/* 
-   INSIRA AQUI SEUS CURSOS MANUALMENTE
-   Exemplo:
-
-   const cursos = {
-   };
-*/
-
+/* ===== BASE DE CURSOS (exemplo funcional) ===== */
 const cursos = {
-"EPOS_ACUP_COMP":"Acupuntura e Técnicas Complementares",
+    "EPOS_ACUP_COMP":"Acupuntura e Técnicas Complementares",
 "EPOS_ANL_CLIN":"Análises Clínicas",
 "EPOS_AUD_GOV":"Auditoria e Governança Clínica em Saúde",
 "EPOS_AUD_SAU":"Auditoria em Saúde",
@@ -285,7 +265,10 @@ const cursos = {
 "EPOS_MERCA":"Pós-graduação em Sistema Financeiro e Mercado de Capitais",
 "EPOS_SEC":"Pós-graduação em Sociologia da Educação e Cultura",
 "EPOS_TEATR":"Pós-graduação em Teatro, Expressividade e Dinamismo no Ambiente Escolar",
-"EPOS_TCDAE":"Pós-graduação em Tecnologia e Cultura Digital Aplicadas à Educação"};
+"EPOS_TCDAE":"Pós-graduação em Tecnologia e Cultura Digital Aplicadas à Educação"
+
+
+};
 
 /* ===== BUSCA ===== */
 const input = document.getElementById("busca");
@@ -293,24 +276,25 @@ const resultado = document.getElementById("resultado");
 
 input.addEventListener("input", function(){
     const valor = this.value.toUpperCase().trim();
-
     if(valor === ""){
         resultado.textContent = "";
         return;
     }
 
+    let encontrado = false;
     for(let codigo in cursos){
-        let parteFinal = codigo.split("_")[1] || codigo;
-        if(parteFinal === valor){
+        if(codigo.includes(valor)){
             resultado.textContent = cursos[codigo];
-            return;
+            encontrado = true;
+            break;
         }
     }
 
-    resultado.textContent = "";
+    if(!encontrado){
+        resultado.textContent = "Curso não encontrado";
+    }
 });
 </script>
 
 </body>
 </html>
-
