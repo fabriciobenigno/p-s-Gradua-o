@@ -2,10 +2,11 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pós-Graduação - Unicesumar</title>
+<title>Índice de Cursos - Unicesumar</title>
 
 <style>
+
+/* ===== ANIMAÇÃO DE ENTRADA DO SITE ===== */
 body{
     margin:0;
     height:100vh;
@@ -18,10 +19,17 @@ body{
 }
 
 @keyframes entradaSite{
-    from{opacity:0; transform: scale(0.95);}
-    to{opacity:1; transform: scale(1);}
+    from{
+        opacity:0;
+        transform: scale(0.95);
+    }
+    to{
+        opacity:1;
+        transform: scale(1);
+    }
 }
 
+/* ===== CONTAINER ===== */
 .container{
     text-align:center;
     background: rgba(255,255,255,0.08);
@@ -32,36 +40,42 @@ body{
     max-width:500px;
 }
 
+/* ===== LOGO ===== */
 .logo{
-    width:150px;
+    width:160px;
     margin-bottom:20px;
 }
 
+/* ===== INPUT ===== */
 input{
     width:100%;
-    padding:16px;
+    padding:18px;
     font-size:20px;
     border:none;
-    border-radius:10px;
+    border-radius:12px;
     outline:none;
     text-align:center;
 }
 
+/* ===== RESULTADO ===== */
 #resultado{
     margin-top:25px;
-    font-size:24px;
+    font-size:26px;
     color:#ffffff;
-    min-height:30px;
+    min-height:35px;
 }
 
-.footer{
+/* ===== CRÉDITO ===== */
+.credito{
     position: fixed;
-    bottom: 10px;
-    right: 12px;
+    bottom: 6px;
+    right: 10px;
     font-size: 9px;
-    color: rgba(255,255,255,0.35);
-    z-index: 999;
+    opacity: 0.25;
+    color: #ffffff;
+    pointer-events: none;
 }
+
 </style>
 </head>
 
@@ -69,16 +83,16 @@ input{
 
 <div class="container">
     <img src="tata.png" class="logo">
-    <input type="text" id="busca" placeholder="Digite o código do curso">
+    <input type="text" id="busca" placeholder="Digite o código do curso...">
     <div id="resultado"></div>
 </div>
 
-<div class="footer">desenvolvido por Fabricio Benigno</div>
+<div class="credito">Desenvolvido por Fabricio Benigno</div>
 
 <script>
-/* ===== BASE DE CURSOS (exemplo funcional) ===== */
-const cursos = {
-    "EPOS_ACUP_COMP":"Acupuntura e Técnicas Complementares",
+
+/* ===== BASE DE CURSOS ===== */
+const cursos = {"EPOS_ACUP_COMP":"Acupuntura e Técnicas Complementares",
 "EPOS_ANL_CLIN":"Análises Clínicas",
 "EPOS_AUD_GOV":"Auditoria e Governança Clínica em Saúde",
 "EPOS_AUD_SAU":"Auditoria em Saúde",
@@ -265,35 +279,28 @@ const cursos = {
 "EPOS_MERCA":"Pós-graduação em Sistema Financeiro e Mercado de Capitais",
 "EPOS_SEC":"Pós-graduação em Sociologia da Educação e Cultura",
 "EPOS_TEATR":"Pós-graduação em Teatro, Expressividade e Dinamismo no Ambiente Escolar",
-"EPOS_TCDAE":"Pós-graduação em Tecnologia e Cultura Digital Aplicadas à Educação"
+"EPOS_TCDAE":"Pós-graduação em Tecnologia e Cultura Digital Aplicadas à Educação"};
 
-
-};
-
-/* ===== BUSCA ===== */
+/* ===== BUSCA EXATA APÓS "_" ===== */
 const input = document.getElementById("busca");
 const resultado = document.getElementById("resultado");
 
-input.addEventListener("input", function(){
+input.addEventListener("input", function () {
     const valor = this.value.toUpperCase().trim();
-    if(valor === ""){
-        resultado.textContent = "";
-        return;
-    }
+    resultado.textContent = "";
 
-    let encontrado = false;
-    for(let codigo in cursos){
-        if(codigo.includes(valor)){
+    if (valor === "") return;
+
+    for (const codigo in cursos) {
+        const parteDepoisUnderline = codigo.split("_")[1];
+
+        if (parteDepoisUnderline === valor) {
             resultado.textContent = cursos[codigo];
-            encontrado = true;
-            break;
+            return;
         }
     }
-
-    if(!encontrado){
-        resultado.textContent = "Curso não encontrado";
-    }
 });
+
 </script>
 
 </body>
