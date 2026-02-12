@@ -67,24 +67,33 @@ input{
 
 /* ===== CRÉDITO ===== */
 .footer{
-    margin-top:25px;
-    font-size:9px;
-    color:rgba(255,255,255,0.35);
+    position: fixed;
+    bottom: 10px;
+    right: 12px;
+    font-size: 9px;
+    color: rgba(255,255,255,0.35);
+    z-index: 999;
 }
 </style>
 </head>
 
 <body>
+
 <div class="container">
     <img src="tata.png" class="logo">
     <input type="text" id="busca" placeholder="Digite o código do curso">
     <div id="resultado"></div>
-    <div class="footer">desenvolvido por Fabricio Benigno</div>
 </div>
 
+<div class="footer">desenvolvido por Fabricio Benigno</div>
+
 <script>
-/* ===== BASE DE CURSOS DE PÓS ===== */
-const cursos = {
+/* ===== BASE DE CURSOS ===== */
+/* 
+   INSIRA AQUI SEUS CURSOS MANUALMENTE
+   Exemplo:
+
+   const cursos = {
 "EPOS_ACUP_COMP":"Acupuntura e Técnicas Complementares",
 "EPOS_ANL_CLIN":"Análises Clínicas",
 "EPOS_AUD_GOV":"Auditoria e Governança Clínica em Saúde",
@@ -273,8 +282,10 @@ const cursos = {
 "EPOS_SEC":"Pós-graduação em Sociologia da Educação e Cultura",
 "EPOS_TEATR":"Pós-graduação em Teatro, Expressividade e Dinamismo no Ambiente Escolar",
 "EPOS_TCDAE":"Pós-graduação em Tecnologia e Cultura Digital Aplicadas à Educação"
+   };
+*/
 
-};
+const cursos = {};
 
 /* ===== BUSCA ===== */
 const input = document.getElementById("busca");
@@ -289,7 +300,7 @@ input.addEventListener("input", function(){
     }
 
     for(let codigo in cursos){
-        let parteFinal = codigo.split("_")[1]; // segunda parte do código
+        let parteFinal = codigo.split("_")[1] || codigo;
         if(parteFinal === valor){
             resultado.textContent = cursos[codigo];
             return;
